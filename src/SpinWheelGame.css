@@ -1,33 +1,94 @@
-
 .game-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 40px;
     padding: 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f6fa;
+    min-height: 100vh;
 }
+
+/* --- Container & Stand --- */
+
+.wheel-container-main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    /* Add some perspective for 3D vibes if needed, but 2D realism is fine */
+}
+
+/* The Base Stand */
+.wheel-stand {
+    position: absolute;
+    bottom: -60px;
+    width: 200px;
+    height: 80px;
+    background: linear-gradient(to right, #b33939, #ff5252, #b33939);
+    border-radius: 50% 50% 10px 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.wheel-legs {
+    position: absolute;
+    bottom: -20px;
+    width: 40px;
+    height: 160px;
+    background: linear-gradient(to right, #b33939, #ff5252, #b33939);
+    z-index: 0;
+}
+
+/* --- Wheel Main Structure --- */
 
 .wheel-wrapper {
     position: relative;
-    width: 300px;
-    height: 300px;
-    margin: 20px;
+    width: 360px;
+    height: 360px;
+    z-index: 2;
+    padding: 15px;
+    /* Space for the rim */
+    background: #d63031;
+    /* Rim Color */
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 5px #b33939,
+        /* Outer dark rim edge */
+        0 10px 25px rgba(0, 0, 0, 0.5);
+    /* Drop shadow */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.pointer {
+/* Decorative Rim Bulbs/Rivets */
+.wheel-rim {
     position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-top: 30px solid #333;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
     z-index: 10;
-    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
 }
+
+.rim-bulb {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    margin-left: -6px;
+    background: radial-gradient(circle at 30% 30%, #ffd700, #ffa502);
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 2px rgba(255, 255, 255, 0.8);
+    transform-origin: 50% 175px;
+    /* Center of the 360px wrapper approx */
+}
+
+/* --- The Spinning Wheel --- */
 
 .wheel {
     width: 100%;
@@ -35,8 +96,10 @@
     border-radius: 50%;
     position: relative;
     overflow: hidden;
-    border: 5px solid #333;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border: 4px solid #fff;
+    /* Inner separator */
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+    background: #fff;
 }
 
 .segment {
@@ -46,78 +109,321 @@
     width: 50%;
     height: 50%;
     transform-origin: 0% 0%;
-    border: 1px solid rgba(0,0,0,0.1);
+    /* Remove borders to make it look cleaner, relying on contrasting colors */
+    border: 1px solid rgba(255, 255, 255, 0.5);
     box-sizing: border-box;
 }
 
 .segment-text {
     position: absolute;
-    left: 20px; /* Offset from center */
-    top: 20px;
+    left: 30px;
+    top: 30px;
     transform-origin: 0% 0%;
     font-weight: bold;
     color: white;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    text-shadow:
+        1px 1px 0 rgba(0, 0, 0, 0.4),
+        0 0 5px rgba(0, 0, 0, 0.2);
     white-space: nowrap;
-    font-size: 14px;
+    font-size: 16px;
+    font-family: 'Arial Black', sans-serif;
+    letter-spacing: 0.5px;
 }
+
+/* --- Center Knob & Pointer --- */
+
+.center-knob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at 30% 30%, #ffd700, #e1b12c, #b7791f);
+    border-radius: 50%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #b7791f;
+}
+
+.center-knob-inner {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffeaa7, #fdcb6e);
+    box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.5);
+}
+
+.pointer {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 50px;
+    z-index: 30;
+    /* Gold arrow shape */
+    background: linear-gradient(to bottom, #ffd700, #ffa502);
+    clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.4));
+}
+
+/* --- Message for empty wheel --- */
+.empty-wheel-message {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    background: #f1f2f6;
+    font-weight: bold;
+}
+
+/* --- Controls & UI --- */
 
 .controls {
     display: flex;
-    gap: 10px;
+    gap: 15px;
+    z-index: 10;
 }
 
 .spin-btn {
-    padding: 12px 30px;
-    font-size: 1.2rem;
-    background-color: #ff4757;
+    padding: 15px 40px;
+    font-size: 1.4rem;
+    background: linear-gradient(to bottom, #ff4757, #ff6b81);
     color: white;
     border: none;
-    border-radius: 40px;
+    border-radius: 50px;
     cursor: pointer;
-    font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    transition: all 0.2s;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow:
+        0 5px 0 #cc3333,
+        0 10px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.1s;
+}
+
+.spin-btn:active:not(:disabled) {
+    transform: translateY(5px);
+    box-shadow:
+        0 0 0 #cc3333,
+        0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .spin-btn:disabled {
-    background-color: #ccc;
+    background: #ccc;
+    box-shadow: none;
     cursor: not-allowed;
     transform: none;
 }
 
-.spin-btn:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0,0,0,0.3);
-}
-
 .secondary-btn {
-    padding: 10px 20px;
-    background-color: #f1f2f6;
-    border: 1px solid #ced6e0;
-    border-radius: 8px;
+    padding: 15px 25px;
+    background-color: white;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    font-weight: bold;
+    color: #555;
     cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s;
 }
 
 .secondary-btn:hover {
-    background-color: #e1e2e6;
+    background-color: #f1f2f6;
+    transform: translateY(-2px);
+}
+
+/* --- Result Display --- */
+
+.status-area {
+    height: 60px;
 }
 
 .result-display {
+    background: #2ed573;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(46, 213, 115, 0.4);
     animation: popIn 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-    text-align: center;
+}
+
+.result-display h2 {
+    margin: 0;
+    font-size: 1.5rem;
 }
 
 @keyframes popIn {
-    0% { transform: scale(0.8); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    80% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
+
+/* --- Configuration Area --- */
+
+.configuration-area {
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+}
+
+.configuration-area h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f1f2f6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-prize-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.add-prize-form input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #f1f2f6;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    outline: none;
+}
+
+.add-prize-form input:focus {
+    border-color: #4ECDC4;
+}
+
+.add-prize-form button {
+    padding: 0 20px;
+    background-color: #4ECDC4;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+
+.add-prize-form button:hover:not(:disabled) {
+    background-color: #3ebcb4;
+}
+
+.add-prize-form button:disabled {
+    background-color: #d1d8e0;
+    cursor: not-allowed;
+}
+
+.prize-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: #7f8fa6;
+    font-weight: 600;
+}
+
+.text-danger {
+    color: #ff4757;
+    background: transparent;
+    border: 1px solid #ff4757;
+}
+
+.text-danger:hover {
+    background-color: #ff4757;
+    color: white;
+}
+
+.prize-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid #f1f2f6;
+    border-radius: 10px;
+}
+
+.prize-list li {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #f1f2f6;
+    background: #fff;
+    transition: background 0.2s;
+}
+
+.prize-list li:hover {
+    background: #fcfcfc;
+}
+
+.prize-list li:last-child {
+    border-bottom: none;
+}
+
+.color-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin-right: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.prize-name {
+    flex: 1;
+    font-size: 1rem;
+    color: #2f3542;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: #ced6e0;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 5px;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.remove-btn:hover {
+    color: #ff4757;
+}
+
+/* --- History Section --- */
 
 .history {
     width: 100%;
-    max-width: 300px;
-    border-top: 2px solid #eee;
-    padding-top: 10px;
+    max-width: 400px;
+    margin-top: 10px;
+    padding: 0 10px;
 }
 
 .history h3 {
@@ -125,41 +431,53 @@
     justify-content: space-between;
     align-items: center;
     font-size: 1rem;
-    color: #555;
+    color: #747d8c;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
 }
 
 .small-btn {
-    font-size: 0.8rem;
-    padding: 4px 8px;
-    background: none;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+    background: white;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
+    color: #555;
+    transition: all 0.2s;
+}
+
+.small-btn:hover {
+    border-color: #333;
+    color: #333;
 }
 
 .history ul {
     list-style: none;
     padding: 0;
-    margin: 10px 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .history-item {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 5px 0;
-    border-bottom: 1px solid #f9f9f9;
+    gap: 6px;
+    padding: 6px 12px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-size: 0.9rem;
+    color: #57606f;
+    border: 1px solid #fff;
 }
 
 .dot {
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     display: inline-block;
-}
-
-.debug-info {
-    font-size: 10px;
-    color: #aaa;
-    margin-top: 20px;
 }
