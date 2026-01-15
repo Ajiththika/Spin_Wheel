@@ -164,13 +164,7 @@ export default function SpinWheelGame() {
 
           {/* The Outer Rim */}
           <div className="wheel-rim">
-            {[...Array(12)].map((_, i) => (
-              <div
-                key={i}
-                className="rim-bulb"
-                style={{ transform: `rotate(${i * 30}deg)` }}
-              ></div>
-            ))}
+            {/* Dots removed per user request */}
           </div>
 
           <div

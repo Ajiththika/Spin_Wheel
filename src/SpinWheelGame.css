@@ -64,7 +64,7 @@
 }
 
 /* Decorative Rim Bulbs/Rivets */
-/* Decorative Rim Bulbs/Rivets */
+/* Decorative Rim Bulbs/Rivets - REMOVED per user request */
 .wheel-rim {
     position: absolute;
     top: 0;
@@ -73,53 +73,6 @@
     height: 100%;
     pointer-events: none;
     z-index: 10;
-}
-
-/* White track circle */
-.wheel-rim::after {
-    content: '';
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
-}
-
-.rim-bulb {
-    position: absolute;
-    top: 2px;
-    /* Centers it on the 5px inset track (approx) */
-    left: 50%;
-    width: 10px;
-    height: 10px;
-    margin-left: -5px;
-    background: radial-gradient(circle at 30% 30%, #ffffff, #bdc3c7);
-    border-radius: 50%;
-    box-shadow:
-        0 2px 4px rgba(0, 0, 0, 0.3),
-        inset 0 0 2px rgba(255, 255, 255, 1);
-    transform-origin: 50% 178px;
-    /* 360/2 = 180. top=2, center=7. Dist=173. Fine tune to 178 to push it out? */
-    /* 
-       Let's calc: 
-       Wrapper Radius = 180.
-       Track is inset 5px. Radius = 175.
-       Bulb center should be at 175.
-       Bulb `top` = 180 - 175 - (10/2) = 0px relative to wrapper top?
-       Wait, `::after` is top:5px. Its border is at 5px.
-       So track radius is 175px (if 360 width).
-       Bulb center needs to be at 175px from center.
-       So top of bulb = 180 - 175 - 5 = 0px.
-       Let's try top: 0px.
-       Transform origin: Distance from bulb top to center = 180px.
-       So transform-origin: 50% 180px.
-    */
-    top: 0px;
-    transform-origin: 50% 180px;
-    z-index: 2;
 }
 
 /* --- The Spinning Wheel --- */
