@@ -177,36 +177,42 @@ export default function SpinWheelGame() {
             className="wheel"
             style={{
               transform: `rotate(${rotation}deg)`,
-              transition: isSpinning ? `transform ${SPIN_DURATION_MS}ms cubic-bezier(0.25, 0.1, 0.25, 1)` : 'none'
+              transition: isSpinning ? `transform ${SPIN_DURATION_MS}ms cubic-bezier(0.25, 0.1, 0.25, 1)` : 'none',
+              background: prizes.length > 0
+                ? `conic-gradient(from 0deg, ${prizes.map((p, i) =>
+                  `${p.color} ${(i / prizes.length) * 100}% ${((i + 1) / prizes.length) * 100}%`
+                ).join(', ')})`
+                : '#ddd'
             }}
           >
-            {/* Center Knob - placed inside but absolutely positioned to be static relative to wheel or spinning with it? 
-                    Actually center knob usually doesn't spin or spins with it. Let's make it decoration on top.
-                    Wait, if it's inside .wheel it spins. If outside it doesn't. 
-                    Real wheels have a static center often, or spinning. Let's put it outside .wheel 
-                    but inside wrapper to be static, or inside to spin. 
-                    Let's update the structure: Center knob should be on top of the wheel.
-                */}
+            {/* Lines separating segments */}
+            {prizes.map((_, i) => (
+              <div
+                key={`line-${i}`}
+                className="segment-line"
+                style={{
+                  transform: `rotate(${i * (360 / prizes.length)}deg)`
+                }}
+              ></div>
+            ))}
 
+            {/* Text Labels */}
             {prizes.length === 0 ? (
               <div className="empty-wheel-message">Add items</div>
             ) : prizes.map((prize, index) => {
-              const rotation = index * (360 / prizes.length);
-              const skewY = 90 - (360 / prizes.length);
+              const sliceAngle = 360 / prizes.length;
+              const rotateAngle = index * sliceAngle + sliceAngle / 2;
               return (
                 <div
                   key={prize.id}
-                  className="segment"
+                  className="segment-text-wrapper"
                   style={{
-                    backgroundColor: prize.color,
-                    transform: `rotate(${rotation}deg) skewY(-${skewY}deg)`,
+                    transform: `rotate(${rotateAngle}deg) translate(0, -50%)`,
                   }}
                 >
                   <div
                     className="segment-text"
-                    style={{
-                      transform: `skewY(${skewY}deg) rotate(${360 / prizes.length / 2}deg)`
-                    }}
+                    style={{ transform: 'rotate(90deg)' }}
                   >
                     {prize.label}
                   </div>
